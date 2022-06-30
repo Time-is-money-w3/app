@@ -12,10 +12,8 @@ export default function Home() {
   const showToastFunc = useStore((state) => state.showToastFunc);
 
   // Wallet connection states
-  const [connectionStatus, setConnectionStatus] = useState(true); // false
-  const [myAddress, setMyAddress] = useState(
-    "0xb21805e1D5c438984D05AB8e5291f0d8DD489013"
-  );
+  const [connectionStatus, setConnectionStatus] = useState(false); // false
+  const [myAddress, setMyAddress] = useState("");
   const [currentAccount, setCurrentAccount] = useState({});
 
   // States related to this client for this connection session
@@ -45,14 +43,14 @@ export default function Home() {
 
   return (
     <div className="container center">
-      {/* <CheckIfWalletIsConnected
+      <CheckIfWalletIsConnected
         setConnectionStatus={setConnectionStatus}
         setMyAddress={setMyAddress}
         myAddress={myAddress}
         connectionStatus={connectionStatus}
         setCurrentAccount={setCurrentAccount}
         setDaiBalance={setDaiBalance}
-      /> */}
+      />
       <br />
       <div>
         {connectionStatus ? (

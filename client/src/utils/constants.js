@@ -35,8 +35,8 @@ export const getWithExpiry = (key) => {
   return item.value;
 };
 
-export const LLAMA_MEET_API_URL = "http://localhost:9000";
-export const LLAMA_APP_URL = "http://localhost:3000";
+export const LLAMA_MEET_API_URL = "https://app.llamatime.xyz";
+export const LLAMA_APP_URL = "https://app.llamatime.xyz";
 
 export const SESSION_EXPIRY_TIME = 1200000; // 10 min in milliseconds
 
@@ -60,3 +60,9 @@ export const stopBothVideoAndAudio = (stream) => {
   });
   console.log("stream : ", stream);
 };
+
+export const PEER_HOST = "llamatime.xyz";
+export const PEER_PORT = 443;
+export const PEER_PATH = "/peerjs";
+export const PEER_SECURE = true;
+export const PEER_DEBUG = 3;

@@ -8,6 +8,11 @@ import {
   SESSION_MESSAGES,
   costPerMinutes,
   stopBothVideoAndAudio,
+  PEER_HOST,
+  PEER_SECURE,
+  PEER_PATH,
+  PEER_PORT,
+  PEER_DEBUG,
 } from "../utils/constants";
 import { useStore } from "../global_stores";
 import { Video, StopCall } from "../components";
@@ -121,10 +126,11 @@ export default function Receiver() {
       const toAddress = sessionDetails.toAddress;
       setPerHourCost(_perHourCost);
       const peer = new Peer({
-        path: "/peer",
-        host: "localhost",
-        port: "9000",
-        debug: 2,
+        host: PEER_HOST,
+        port: PEER_PORT,
+        path: PEER_PATH,
+        secure: PEER_SECURE,
+        debug: PEER_DEBUG,
       });
       peer.on("open", function (_id) {
         try {

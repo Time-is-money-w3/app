@@ -8,6 +8,11 @@ import {
   ConvertDAIReadableToPrecise,
   costPerMinutes,
   stopBothVideoAndAudio,
+  PEER_HOST,
+  PEER_SECURE,
+  PEER_PATH,
+  PEER_PORT,
+  PEER_DEBUG
 } from "../utils/constants";
 import contractABI from "../utils/llama_pay_abi.json";
 import { CheckIfWalletIsConnected, Video, StopCall } from "../components/index";
@@ -217,10 +222,11 @@ function Caller() {
     // request the media permission
 
     const peer = new Peer({
-      path: "/peer",
-      host: "localhost",
-      port: "9000",
-      debug: 2,
+      host: PEER_HOST,
+      port: PEER_PORT,
+      path: PEER_PATH,
+      secure: PEER_SECURE,
+      debug: PEER_DEBUG,
     });
 
     peer.on("connection", function (c) {
