@@ -5,10 +5,11 @@ export const DAI_CONTRACT_ADDRESS =
   "0x5eD8BD53B0c3fa3dEaBd345430B1A3a6A4e8BD7C";
 
 export const ConvertDAIPreciseToReadable = (BigNumber) =>
-  +BigNumber.toString() / 1000000000000000000;
+  +BigNumber.toString() / 100000000000000000;
 
 export const ConvertDAIReadableToPrecise = (DAI) =>
-  BigInt(DAI) * BigInt(1000000000000000000);
+  // eslint-disable-next-line no-undef
+  BigInt(DAI) * BigInt(100000000000000000);
 
 export const setWithExpiry = (key, value, ttl) => {
   const now = new Date();
@@ -34,4 +35,28 @@ export const getWithExpiry = (key) => {
   return item.value;
 };
 
-export const LLAMA_MEET_API_URL = "https://localhost:8001";
+export const LLAMA_MEET_API_URL = "http://localhost:9000";
+export const LLAMA_APP_URL = "http://localhost:3000";
+
+export const SESSION_EXPIRY_TIME = 1200000; // 10 min in milliseconds
+
+export const SESSION_MESSAGES = {
+  END_SESSION: "END_SESSION",
+  REQUEST_FOR_ACKNOWLEDGE_CONNECTION: "REQUEST_FOR_ACKNOWLEDGE_CONNECTION",
+  ACKNOWLEDGE_CONNECTION: "ACKNOWLEDGE_CONNECTION",
+  SUCCESSFULLY_ENDED_CONTRACT: "SUCCESSFULLY_ENDED_CONTRACT",
+};
+
+export const costPerMinutes = (perHourCost, minutes) => {
+  const hours = +(+minutes / 60).toFixed(2);
+  return +hours * +perHourCost;
+};
+
+export const stopBothVideoAndAudio = (stream) => {
+  stream.getTracks().forEach(function (track) {
+    if (track.readyState == "live") {
+      track.stop();
+    }
+  });
+  console.log("stream : ", stream);
+};

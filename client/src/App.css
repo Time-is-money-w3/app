@@ -26,20 +26,26 @@
 }
 
 button {
-  color: #eeee;
-  background-color: #333;
+  color: #333;
+  background-color: #ffff;
   text-align: center;
   font-size: 16px;
   padding: 16px 24px;
   height: 48px;
   border-style: solid;
-  border-color: #3333;
+  border-color: #333;
   border-width: 1px;
-  border-radius: 24px;
+  border-radius: 8px;
+  min-width: 200px;
+  cursor: pointer;
+}
+button:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 button.disabled,
 button[disabled] {
-  background-color: #ddd;
+  background-color: #eee;
+  color: #ddd;
 }
 input[type="text"],
 input[type="password"],
@@ -58,7 +64,7 @@ input[type="number"] {
 /* toast */
 
 /* The snackbar - position it at the bottom and in the middle of the screen */
-#snackbar {
+.snackbar {
   visibility: hidden; /* Hidden by default. Visible on click */
   min-width: 250px; /* Set a default minimum width */
   margin-left: -125px; /* Divide value of min-width by 2 */
@@ -71,15 +77,26 @@ input[type="number"] {
   z-index: 1; /* Add a z-index if needed */
   left: 50%; /* Center the snackbar */
   bottom: 30px; /* 30px from the bottom */
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
+.snackbar.show {
   visibility: visible; /* Show the snackbar */
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
   However, delay the fade out process for 2.5 seconds */
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.flipped {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
+  -moz-transform: rotateY(180deg); /* Firefox */
 }
 
 /* Animations to fade the snackbar in and out */

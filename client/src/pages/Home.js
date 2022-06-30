@@ -1,63 +1,58 @@
 import React, { useState } from "react";
-import { CheckIfWalletIsConnected, Error } from "../components/index";
+import { CheckIfWalletIsConnected } from "../components/index";
+import {
+  setWithExpiry,
+  SESSION_EXPIRY_TIME,
+  LLAMA_APP_URL,
+} from "../utils/constants";
 import uuid from "react-uuid";
+import { useStore } from "../global_stores";
 
 export default function Home() {
-  // Error state
-
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  // success toast
-  //   const [showSuccessToast, setShowSuccessToast] = useState(false);
-  //   const [successMessage, setSuccessMessage] = useState("");
-
-  const showErrorFunc = (error, temp) => {
-    setShowError(true);
-    setErrorMessage(error);
-    if (temp === true) {
-      setTimeout(() => {
-        setShowError(false);
-      }, 7000);
-    }
-  };
+  const showToastFunc = useStore((state) => state.showToastFunc);
 
   // Wallet connection states
-  const [connectionStatus, setConnectionStatus] = useState(false);
-  const [myAddress, setMyAddress] = useState("");
+  const [connectionStatus, setConnectionStatus] = useState(true); // false
+  const [myAddress, setMyAddress] = useState(
+    "0xb21805e1D5c438984D05AB8e5291f0d8DD489013"
+  );
   const [currentAccount, setCurrentAccount] = useState({});
 
   // States related to this client for this connection session
   const [perHourCost, setPerHourCost] = useState(0);
 
-  const [daiBalance, setDaiBalance] = useState("");
+  const [daiBalance, setDaiBalance] = useState(0);
 
   const [isSessionGettingCreated, setIsSessionGettingCreated] = useState(false);
 
   const createSession = async () => {
     if (+perHourCost > 100)
-      return showErrorFunc("You can charge maximum of 100$", true);
+      return showToastFunc("You can charge maximum of 100$");
+    if (+perHourCost < 1) return showToastFunc("You can charge minimum of 1$");
     const sessionId = uuid();
-    localStorage.setItem(
+    setWithExpiry(
       sessionId,
-      JSON.stringify({
+      {
         perHourCost,
         createdAt: Date.now(),
         toAddress: myAddress,
-      })
+      },
+      SESSION_EXPIRY_TIME
     );
     setIsSessionGettingCreated(true);
+    window.open(`${LLAMA_APP_URL}/receiver/${sessionId}`, "_self");
   };
 
   return (
     <div className="container center">
-      <CheckIfWalletIsConnected
+      {/* <CheckIfWalletIsConnected
         setConnectionStatus={setConnectionStatus}
         setMyAddress={setMyAddress}
         myAddress={myAddress}
         connectionStatus={connectionStatus}
         setCurrentAccount={setCurrentAccount}
         setDaiBalance={setDaiBalance}
-      />
+      /> */}
       <br />
       <div>
         {connectionStatus ? (
@@ -80,6 +75,7 @@ export default function Home() {
               type="number"
               placeholder="amount in USD"
               onChange={(e) => setPerHourCost(e.target.value)}
+              value={perHourCost}
             />
             <br />
             <br />
@@ -94,7 +90,6 @@ export default function Home() {
           </div>
         ) : null}
       </div>
-      <Error showError={showError} errorMessage={errorMessage} />{" "}
     </div>
   );
 }

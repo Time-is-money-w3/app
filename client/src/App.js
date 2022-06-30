@@ -1,30 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
-import React, { useEffect, useState } from "react";
-// import contractABI from "./abi.json";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Caller from "./pages/Caller";
 import Receiver from "./pages/Receiver";
-// import { ethers } from "ethers";
-
-// const etherJsExample= () =>{
-//   const sablier = new ethers.Contract(0xabcd..., sablierABI, signerOrProvider); // get a handle for the Sablier contract
-// const recipient = 0xcdef...;
-// const deposit = "2999999999999998944000"; // almost 3,000, but not quite
-// const now = Math.round(new Date().getTime() / 1000); // get seconds since unix epoch
-// const startTime = now + 3600; // 1 hour from now
-// const stopTime = now + 2592000 + 3600; // 30 days and 1 hour from now
-
-// const token = new ethers.Contract(0xcafe..., erc20ABI, signerOrProvider); // get a handle for the token contract
-// const approveTx = await token.approve(sablier.address, deposit); // approve the transfer
-// await approveTx.wait();
-
-// const createStreamTx = await sablier.createStream(recipient, deposit, token.address, startTime, stopTime);
-// await createStreamTx.wait();
-// }
+import { Toast } from "./components/index";
+import { useStore } from "./global_stores";
 
 function App() {
+  const showToast = useStore((state) => state.showToast);
+  const toastMessage = useStore((state) => state.toastMessage);
   // const TestSigner = async () => {
   //   try {
   //     const { ethereum } = window;
@@ -77,10 +62,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/caller/:id" element={<Caller />} />
         <Route path="/receiver/:id" element={<Receiver />} />
+        <Route path="/" element={<Home />} />
       </Routes>
+      <Toast showToast={showToast} toastMessage={toastMessage} />{" "}
     </div>
   );
 }

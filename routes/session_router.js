@@ -45,6 +45,11 @@ router.post(
         );
       }
       const { toAddress, sessionId, peerId, perHourCost } = request.body;
+      const session = await Session.findOne({ sessionId });
+      if (session) {
+        await Session.findOneAndUpdate({ sessionId }, { peerId });
+        return response.status(200).send({});
+      }
       const newSession = new Session({
         toAddress,
         sessionId,
@@ -52,7 +57,7 @@ router.post(
         perHourCost,
       });
       await newSession.save();
-      response.status(201).send("Ok");
+      response.status(201).send({});
     } catch (error) {
       console.log({ error });
       response.status(500).send({
@@ -67,10 +72,16 @@ router.post(
 router.get("/:sessionId", async (request, response) => {
   try {
     const { sessionId } = request.params;
-    const { toAddress, peerId, perHourCost, fromAddress } =
-      await Session.findOne({
-        sessionId,
-      });
+    const sessionDetails = await Session.findOne({
+      sessionId,
+    });
+
+    if (!sessionDetails)
+      return response
+        .status(409)
+        .send({ message: "Session expired or invalid" });
+    const { toAddress, peerId, perHourCost, fromAddress } = sessionDetails;
+
     response
       .status(200)
       .send({ sessionId, toAddress, peerId, perHourCost, fromAddress });
