@@ -114,13 +114,19 @@ function Caller() {
       localStorage.setItem("session_ended", "true");
       const streamCreation = await streamContract.cancelStream(
         receiverAddress,
-        Math.floor(ConvertDAIReadableToPrecise(+receiverPerHourCost / 3600))
+        Math.floor(
+          // eslint-disable-next-line no-undef
+          ConvertDAIReadableToPrecise(+receiverPerHourCost) / BigInt(3600)
+        )
       );
       console.log(
         "Mining...",
         streamCreation.hash,
         receiverAddress,
-        Math.floor(+receiverPerHourCost / 3600)
+        Math.floor(
+          // eslint-disable-next-line no-undef
+          ConvertDAIReadableToPrecise(+receiverPerHourCost) / BigInt(3600)
+        )
       );
       await streamCreation.wait();
       setCompletedPayment(true);
@@ -154,7 +160,11 @@ function Caller() {
     });
     const streamCreation = await streamContract.createStream(
       receiverAddress,
-      Math.floor(ConvertDAIReadableToPrecise(+receiverPerHourCost / 3600))
+
+      Math.floor(
+        // eslint-disable-next-line no-undef
+        ConvertDAIReadableToPrecise(+receiverPerHourCost) / BigInt(3600)
+      )
     );
     console.log("Mining...", streamCreation.hash);
     await streamCreation.wait();
