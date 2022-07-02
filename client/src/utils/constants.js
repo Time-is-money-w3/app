@@ -61,7 +61,7 @@ export const stopBothVideoAndAudio = (stream) => {
   console.log("stream : ", stream);
 };
 
-export const PEER_HOST = "llamatime.xyz";
+export const PEER_HOST = "app.llamatime.xyz";
 export const PEER_PORT = 443;
 export const PEER_PATH = "/peerjs";
 export const PEER_SECURE = true;
