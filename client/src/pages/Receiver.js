@@ -13,6 +13,7 @@ import {
   PEER_PATH,
   PEER_PORT,
   PEER_DEBUG,
+  DAI_CONTRACT_ADDRESS,
 } from "../utils/constants";
 import { useStore } from "../global_stores";
 import { Video, StopCall } from "../components";
@@ -24,7 +25,8 @@ const ReceiverPaymentDetails = ({ perHourCost }) => {
       call was about {minutes.toFixed(0)} minutes{" "}
       {((+minutes * 60) % 60).toFixed(0)} seconds. You have earned ~{" "}
       {costPerMinutes(perHourCost, minutes).toFixed(2)} $. You should receive it
-      to your wallets in few seconds
+      to your wallets in few seconds. Import the token in to your wallet.
+      Contract address of the token is : {`${DAI_CONTRACT_ADDRESS}`}
     </div>
   );
 };
@@ -215,6 +217,11 @@ export default function Receiver() {
 
             setPeerJoinedTheSession(true);
           });
+        })
+        .catch((e) => {
+          showToastFunc(
+            "Could not retrieve the video and audio. Please allow permissions"
+          );
         });
     }
   }, []);

@@ -12,7 +12,7 @@ import {
   PEER_SECURE,
   PEER_PATH,
   PEER_PORT,
-  PEER_DEBUG
+  PEER_DEBUG,
 } from "../utils/constants";
 import contractABI from "../utils/llama_pay_abi.json";
 import { CheckIfWalletIsConnected, Video, StopCall } from "../components/index";
@@ -114,7 +114,7 @@ function Caller() {
       localStorage.setItem("session_ended", "true");
       const streamCreation = await streamContract.cancelStream(
         receiverAddress,
-        ConvertDAIReadableToPrecise(+receiverPerHourCost)
+        ConvertDAIReadableToPrecise(+receiverPerHourCost / 3600)
       );
       console.log("Mining...", streamCreation.hash);
       await streamCreation.wait();
@@ -251,6 +251,7 @@ function Caller() {
 
     console.log({ receiverPeerId });
     setTimeout(() => {
+      console.log("Attempting to connect to the Peer!");
       var _conn = peer.connect(receiverPeerId, {
         reliable: true,
       });
@@ -274,17 +275,21 @@ function Caller() {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
-        console.log({ stream });
+        console.log("Fetched audio and video stream , ", stream);
         startStream().then(() => {
+          console.log("started payment streaming " + receiverAddress);
+          console.log("Attempting to call peerId : ", receiverPeerId);
+
           const _call = peer.call(receiverPeerId, stream);
           setCall(_call);
 
           _call.on("stream", function (_stream) {
             // start Streaming the moneys
-
+            console.log("Received Stream : ", _stream);
             setReceiverStream([...receiverStream, _stream]);
 
             setTimeout(() => {
+              console.log("Set stream started true");
               setSessionCreated(true);
             }, 4000);
           });
@@ -303,7 +308,9 @@ function Caller() {
         });
       })
       .catch((e) => {
-        console.log({ Error: e });
+        console.log(
+          "Could not get the audio and video stream. Please allow permissions"
+        );
       });
     // // make a call to the
     // setTimeout(() => {
@@ -311,7 +318,7 @@ function Caller() {
 
     // }, 5000);
     peer.on("error", (e) => {
-      console.log("Error : ", e);
+      console.log("Error on peer connection : ", e);
     });
   };
 

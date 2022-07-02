@@ -53,11 +53,12 @@ export const costPerMinutes = (perHourCost, minutes) => {
 };
 
 export const stopBothVideoAndAudio = (stream) => {
-  stream.getTracks().forEach(function (track) {
-    if (track.readyState == "live") {
-      track.stop();
-    }
-  });
+  if (stream.getTracks)
+    stream.getTracks().forEach(function (track) {
+      if (track.readyState == "live") {
+        track.stop();
+      }
+    });
   console.log("stream : ", stream);
 };
 
@@ -65,4 +66,4 @@ export const PEER_HOST = "app.llamatime.xyz";
 export const PEER_PORT = 443;
 export const PEER_PATH = "/peer";
 export const PEER_SECURE = true;
-export const PEER_DEBUG = 3;
+export const PEER_DEBUG = 2;
