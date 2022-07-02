@@ -124,7 +124,7 @@ export const Toast = ({ showToast, toastMessage }) => {
   );
 };
 
-export const Video = ({ stream }) => {
+export const Video = ({ stream, muted }) => {
   const localVideo = React.createRef();
 
   // localVideo.current is null on first render
@@ -138,6 +138,7 @@ export const Video = ({ stream }) => {
 
   return (
     <video
+      muted={muted ? "muted" : false}
       className="flipped"
       style={{ width: "100%" }}
       ref={localVideo}

@@ -290,7 +290,7 @@ export default function Receiver() {
           style={{ width: "100%", backgroundColor: "#ddd" }}
         >
           {callerStream.map((s) => (
-            <Video stream={s} />
+            <Video stream={s} muted={false} />
           ))}
         </div>
       )}
@@ -299,7 +299,7 @@ export default function Receiver() {
         style={{ width: "100%", backgroundColor: "#ddd" }}
       >
         {myStream.map((s) => (
-          <Video stream={s} />
+          <Video stream={s} muted={true} />
         ))}
       </div>
       {peerJoinedTheSession ? <StopCall endSession={endSession} /> : null}

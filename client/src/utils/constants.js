@@ -1,3 +1,4 @@
+const ENVIRONMENT = "PROD"; // PROD / DEV
 export const LLAMA_TIME_CONTRACT_ADDRESS =
   "0x5A1f011E8F010f8B6Abf81e75Db34866b685ca54";
 
@@ -35,8 +36,13 @@ export const getWithExpiry = (key) => {
   return item.value;
 };
 
-export const LLAMA_MEET_API_URL = "https://app.llamatime.xyz";
-export const LLAMA_APP_URL = "https://app.llamatime.xyz";
+export const LLAMA_MEET_API_URL =
+  ENVIRONMENT === "PROD"
+    ? "https://app.llamatime.xyz"
+    : "http://localhost:9000";
+export const LLAMA_APP_URL = "PROD"
+  ? "https://app.llamatime.xyz"
+  : "http://localhost:3000";
 
 export const SESSION_EXPIRY_TIME = 1200000; // 10 min in milliseconds
 
@@ -62,8 +68,9 @@ export const stopBothVideoAndAudio = (stream) => {
   console.log("stream : ", stream);
 };
 
-export const PEER_HOST = "app.llamatime.xyz";
-export const PEER_PORT = 443;
+export const PEER_HOST =
+  ENVIRONMENT === "PROD" ? "app.llamatime.xyz" : "localhost";
+export const PEER_PORT = ENVIRONMENT === "PROD" ? 443 : 9000;
 export const PEER_PATH = "/peer";
-export const PEER_SECURE = true;
+export const PEER_SECURE = ENVIRONMENT === "PROD" ? true : false;
 export const PEER_DEBUG = 2;
