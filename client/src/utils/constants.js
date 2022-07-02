@@ -5,11 +5,11 @@ export const DAI_CONTRACT_ADDRESS =
   "0x5eD8BD53B0c3fa3dEaBd345430B1A3a6A4e8BD7C";
 
 export const ConvertDAIPreciseToReadable = (BigNumber) =>
-  +BigNumber.toString() / 100000000000000000;
+  +BigNumber.toString() / 1000000000000000000;
 
 export const ConvertDAIReadableToPrecise = (DAI) =>
   // eslint-disable-next-line no-undef
-  BigInt(DAI) * BigInt(100000000000000000);
+  BigInt(DAI) * BigInt(1000000000000000000);
 
 export const setWithExpiry = (key, value, ttl) => {
   const now = new Date();
