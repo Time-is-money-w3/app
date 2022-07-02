@@ -320,7 +320,7 @@ function Caller() {
       })
       .catch((e) => {
         console.log(
-          "Could not get the audio and video stream. Please allow permissions"
+          "Could not get the audio and video stream. Please allow permissions", e
         );
       });
     // // make a call to the

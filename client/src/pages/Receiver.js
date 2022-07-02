@@ -220,7 +220,8 @@ export default function Receiver() {
         })
         .catch((e) => {
           showToastFunc(
-            "Could not retrieve the video and audio. Please allow permissions"
+            "Could not retrieve the video and audio. Please allow permissions",
+            e
           );
         });
     }
