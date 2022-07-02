@@ -114,7 +114,7 @@ function Caller() {
       localStorage.setItem("session_ended", "true");
       const streamCreation = await streamContract.cancelStream(
         receiverAddress,
-        ConvertDAIReadableToPrecise(Math.floor(+receiverPerHourCost / 3600))
+        Math.floor(ConvertDAIReadableToPrecise(+receiverPerHourCost / 3600))
       );
       console.log(
         "Mining...",
@@ -154,7 +154,7 @@ function Caller() {
     });
     const streamCreation = await streamContract.createStream(
       receiverAddress,
-      ConvertDAIReadableToPrecise(Math.floor(+receiverPerHourCost / 3600))
+      Math.floor(ConvertDAIReadableToPrecise(+receiverPerHourCost / 3600))
     );
     console.log("Mining...", streamCreation.hash);
     await streamCreation.wait();
