@@ -136,9 +136,16 @@ export const Video = ({ stream, muted }) => {
     if (localVideo.current) localVideo.current.srcObject = stream;
   }, [stream, localVideo]);
 
-  return (
+  return muted ? (
     <video
       muted={muted ? "muted" : false}
+      className="flipped"
+      style={{ width: "100%" }}
+      ref={localVideo}
+      autoPlay
+    />
+  ) : (
+    <video
       className="flipped"
       style={{ width: "100%" }}
       ref={localVideo}
