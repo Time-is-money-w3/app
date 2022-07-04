@@ -56,7 +56,7 @@ export default function Home() {
         {connectionStatus ? (
           <div>
             <span>
-              <b> Your DAI balance</b> : {daiBalance.toFixed(2)} USD
+               Your DAI balance: <b>{daiBalance.toFixed(2)} </b> USD
             </span>
             <br />
             <br />
