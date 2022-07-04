@@ -21,8 +21,35 @@ export const CheckIfWalletIsConnected = ({
   const showToastFunc = useStore((state) => state.showToastFunc);
 
   const populateEthereumValues = async (ethereum) => {
+    const chainId = await ethereum.request({ method: "eth_chainId" });
+    const rinkebyTestChainId = 4;
+    console.log("hex", ethers.utils.hexValue(rinkebyTestChainId));
+    if (chainId !== rinkebyTestChainId) {
+      try {
+        await ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [
+            {
+              chainId: ethers.utils.hexValue(rinkebyTestChainId),
+            },
+          ],
+        });
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+          console.log(
+            "This network is not available in your metamask, please add it"
+          );
+          return showToastFunc(
+            "Please enable test-network on your metamask and try again"
+          );
+        }
+        console.log("Failed to switch to the network");
+      }
+    }
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
+
     const address = await signer.getAddress();
     console.log({ address });
     const daiAddress = DAI_CONTRACT_ADDRESS;

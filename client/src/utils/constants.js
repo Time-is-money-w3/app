@@ -12,6 +12,10 @@ export const ConvertDAIReadableToPrecise = (DAI) =>
   // eslint-disable-next-line no-undef
   BigInt(DAI) * BigInt(1000000000000000000);
 
+export const ConvertPerHourCostToContractPerSecondCost = (DAI) =>
+  // eslint-disable-next-line no-undef
+  BigInt(DAI) * BigInt(100000000000000000000);
+
 export const setWithExpiry = (key, value, ttl) => {
   const now = new Date();
   const item = {

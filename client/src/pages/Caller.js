@@ -5,7 +5,7 @@ import {
   LLAMA_TIME_CONTRACT_ADDRESS,
   ConvertDAIPreciseToReadable,
   SESSION_MESSAGES,
-  ConvertDAIReadableToPrecise,
+  ConvertPerHourCostToContractPerSecondCost,
   costPerMinutes,
   stopBothVideoAndAudio,
   PEER_HOST,
@@ -115,16 +115,18 @@ function Caller() {
       const streamCreation = await streamContract.cancelStream(
         receiverAddress,
 
-        // eslint-disable-next-line no-undef
-        ConvertDAIReadableToPrecise(+receiverPerHourCost) / BigInt(3600)
+        ConvertPerHourCostToContractPerSecondCost(+receiverPerHourCost) /
+          // eslint-disable-next-line no-undef
+          BigInt(3600)
       );
       console.log(
         "Mining...",
         streamCreation.hash,
         receiverAddress,
 
-        // eslint-disable-next-line no-undef
-        ConvertDAIReadableToPrecise(+receiverPerHourCost) / BigInt(3600)
+        ConvertPerHourCostToContractPerSecondCost(+receiverPerHourCost) /
+          // eslint-disable-next-line no-undef
+          BigInt(3600)
       );
       await streamCreation.wait();
       setCompletedPayment(true);
@@ -153,14 +155,15 @@ function Caller() {
     console.log("Start streaming contract called.");
     console.log({
       receiverAddress,
-      amount: ConvertDAIReadableToPrecise(+receiverPerHourCost),
+      amount: ConvertPerHourCostToContractPerSecondCost(+receiverPerHourCost),
       streamContract,
     });
     const streamCreation = await streamContract.createStream(
       receiverAddress,
 
-      // eslint-disable-next-line no-undef
-      ConvertDAIReadableToPrecise(+receiverPerHourCost) / BigInt(3600)
+      ConvertPerHourCostToContractPerSecondCost(+receiverPerHourCost) /
+        // eslint-disable-next-line no-undef
+        BigInt(3600)
     );
     console.log("Mining...", streamCreation.hash);
     await streamCreation.wait();
@@ -320,7 +323,8 @@ function Caller() {
       })
       .catch((e) => {
         console.log(
-          "Could not get the audio and video stream. Please allow permissions", e
+          "Could not get the audio and video stream. Please allow permissions",
+          e
         );
       });
     // // make a call to the
