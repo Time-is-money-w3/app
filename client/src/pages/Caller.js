@@ -24,7 +24,10 @@ const CallerPaymentDetails = ({ receiverPerHourCost }) => {
   const minutes = useStore((state) => state.minutes);
   return (
     <div className="container center">
-      <span>Session was for {minutes.toFixed(2)} minutes.</span>
+      <span>
+        Session was for {Math.floor(minutes)} minutes {(minutes * 60) % 60}
+        seconds.
+      </span>
       <br />
       <br />
       <span>
